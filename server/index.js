@@ -1,13 +1,14 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const fs = require('fs').promises;
-
 const tf = require('@tensorflow/tfjs');
+const fs = require('fs').promises;
 const tfn = require('@tensorflow/tfjs-node-gpu');
-const handler = tfn.io.fileSystem('saved_model_tfjs/model.json');
+const app = express();
 
+const handler = tfn.io.fileSystem('saved_model_tfjs/model.json');
+const port = 3001
 const filePath = './uploads/'
+
 app.use(cors());
 
 async function getFileFromPath(fileName) {
@@ -29,3 +30,11 @@ async function loadModel() {
 }
 
 loadModel()
+
+app.get('/', (req, res) => {
+  res.send("Home of the DNN!")
+});
+
+app.listen(port || 3001, () => {
+  console.log(`Listening on port ${port}`);
+});
