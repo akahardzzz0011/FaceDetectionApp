@@ -6,10 +6,12 @@ const tfn = require('@tensorflow/tfjs-node-gpu');
 const app = express();
 
 const handler = tfn.io.fileSystem('saved_model_tfjs/model.json');
-const port = 3001
+const port = 3003
 const filePath = './uploads/'
+const uploadRouter = require('./router/uploadImageRouter');
 
 app.use(cors());
+app.use('/faceDetection', uploadRouter)
 
 async function getFileFromPath(fileName) {
   try {
