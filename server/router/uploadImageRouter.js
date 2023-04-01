@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     res.sendStatus(200);
 });
 router.post('/', (req, res) => {
-    console.log(req.body);
+    console.log(req.file);
     res.sendStatus(200);
 });
 
