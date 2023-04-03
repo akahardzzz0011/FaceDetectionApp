@@ -5,6 +5,7 @@ const fs = require('fs').promises;
 const tfn = require('@tensorflow/tfjs-node-gpu');
 const app = express();
 const bodyParser = require('body-parser');
+const upload = require('express-fileupload');
 
 const handler = tfn.io.fileSystem('saved_model_tfjs/model.json');
 const port = 3003
@@ -12,6 +13,7 @@ const filePath = './uploads/'
 const uploadRouter = require('./router/uploadImageRouter');
 
 app.use(cors());
+app.use(upload());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/faceDetection', uploadRouter)
