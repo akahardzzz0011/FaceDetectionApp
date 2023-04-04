@@ -13,9 +13,10 @@ export default function ImageUpload() {
 
   const processImageRequest = (e) => {
     e.preventDefault();
+    
     let data = new FormData()
     data.append('image', imageFile)
-
+    
     userService.processImageRequest(data).then(results => {
       console.log(results);
     });

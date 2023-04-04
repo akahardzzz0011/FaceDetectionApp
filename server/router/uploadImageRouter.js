@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
-
-router.get('/', (req, res) => {
-    res.sendStatus(200);
-});
+const fileService = require('../services/fileService');
 
 router.post('/', (req, res) => {
     console.log(req.files);
-    if(req.body) {
+
+    let fileFormat = req.files.image.mimetype.split('/').pop();
+    let acceptedFormats = ['png', 'jpg', 'jpeg'] 
+
+    if(acceptedFormats.includes(fileFormat)) {
+        fileService(req.files.image)
         res.sendStatus(200);
     } else {
-        res.sendStatus(404);
+        res.send(400).send({
+            message:"Invalid file fromat"
+        });
     }
 })
 
