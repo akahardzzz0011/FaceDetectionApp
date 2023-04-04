@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const fileService = require('../services/fileService');
+import { Router } from 'express';
+const router = Router();
+import saveFileToPath from '../services/fileService.js';
 
 router.post('/', (req, res) => {
     console.log(req.files);
@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
     let acceptedFormats = ['png', 'jpg', 'jpeg'] 
 
     if(acceptedFormats.includes(fileFormat)) {
-        fileService(req.files.image)
+        saveFileToPath(req.files.image)
         res.sendStatus(200);
     } else {
         res.send(400).send({
@@ -18,4 +18,4 @@ router.post('/', (req, res) => {
     }
 })
 
-module.exports = router
+export default router

@@ -1,15 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const tf = require('@tensorflow/tfjs');
-const fs = require('fs').promises;
-const tfn = require('@tensorflow/tfjs-node-gpu');
+import express from 'express';
+import cors from 'cors';
+import { loadLayersModel } from '@tensorflow/tfjs';
+import { promises as fs } from 'fs';
+import { io } from '@tensorflow/tfjs-node-gpu';
 const app = express();
-const upload = require('express-fileupload');
+import upload from 'express-fileupload';
 
-const handler = tfn.io.fileSystem('saved_model_tfjs/model.json');
+const handler = io.fileSystem('saved_model_tfjs/model.json');
 const port = 3003
 const filePath = './uploads/'
-const uploadRouter = require('./router/uploadImageRouter');
+import uploadRouter from './router/uploadImageRouter.js';
 
 app.use(cors());
 app.use('/static', express.static('uploads'));
@@ -26,7 +26,7 @@ async function getFileFromPath(fileName) {
 }
 
 async function loadModel() {
-  const model = await tf.loadLayersModel(handler);
+  const model = await loadLayersModel(handler);
   
   let imageFile = await getFileFromPath('test01.jpg')
   console.log(imageFile);
