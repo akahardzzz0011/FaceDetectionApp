@@ -1,10 +1,9 @@
-const path = require('path');
+import { join } from 'path';
 
 const saveFileToPath = (file) => {
-    staticPath = path.join(__dirname, '..', 'uploads');
-    filePath = path.join(staticPath, file.name)
+    let staticPath = join('./', 'uploads');
+    let filePath = join(staticPath, file.name)
     file.mv(filePath);
 }
 
-
-module.exports = saveFileToPath;
+export default saveFileToPath;
