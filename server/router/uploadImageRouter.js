@@ -6,7 +6,7 @@ import loadModel from '../imageDetection/imagePrediction.js';
 router.post('/', (req, res) => {
 
     let fileFormat = req.files.image.mimetype.split('/').pop();
-    let acceptedFormats = ['png', 'jpg', 'jpeg'] 
+    let acceptedFormats = ['png', 'jpg', 'jpeg']
 
     if(acceptedFormats.includes(fileFormat)) {
         saveFileToPath(req.files.image);
