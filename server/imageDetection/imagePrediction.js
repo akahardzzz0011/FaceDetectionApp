@@ -3,7 +3,6 @@ import { io, loadLayersModel, node } from '@tensorflow/tfjs-node-gpu';
 const handler = io.fileSystem('saved_model_tfjs/model.json');
 import sharp from 'sharp'
 
-
 async function getFileFromPath(fileName) {
     try {
         let imageData = await promises.readFile(`uploads/${fileName}`);
@@ -25,14 +24,13 @@ async function getMetaData(fileName) {
     }
 }
 */
-async function loadModel(imageName) {
+async function imagePrediction(imageName) {
     const model = await loadLayersModel(handler);
-
+    
     let imageFile = await getFileFromPath(imageName);
     let tfImage = node.decodeImage(imageFile);
     let pred = model.predict(tfImage.reshape([1, 128, 128, 3]));
-    console.log(pred);
-
+    return pred;
 }
 
-export default loadModel
+export default imagePrediction
