@@ -1,9 +1,9 @@
 import { join } from 'path';
 
-const saveFileToPath = (file) => {
+const saveFileToPath = async (file) => {
     let staticPath = join('./', 'uploads');
     let filePath = join(staticPath, file.name)
-    file.mv(filePath);
+    await file.mv(filePath);
 }
 
 export default saveFileToPath;

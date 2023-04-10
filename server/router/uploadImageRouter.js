@@ -1,22 +1,31 @@
 import { Router } from 'express';
 const router = Router();
 import saveFileToPath from '../services/fileService.js';
-import loadModel from '../imageDetection/imagePrediction.js';
+import imagePrediction from '../imageDetection/imagePrediction.js';
 
-router.post('/', (req, res) => {
 
-    let fileFormat = req.files.image.mimetype.split('/').pop();
-    let acceptedFormats = ['png', 'jpg', 'jpeg']
+router.post('/', async (req, res) => {
+    try {
+        const fileFormat = req.files.image.mimetype.split('/').pop();
+        const acceptedFormats = ['png', 'jpg', 'jpeg']
 
-    if(acceptedFormats.includes(fileFormat)) {
-        saveFileToPath(req.files.image);
-        loadModel(req.files.image.name);
-        res.sendStatus(200);
-    } else {
-        res.send(400).send({
-            message:"Invalid file format"
-        });
+        if(acceptedFormats.includes(fileFormat.toLowerCase())) {
+            await saveFileToPath(req.files.image);
+            const predictionResults = await imagePrediction(req.files.image.name);
+            if (predictionResults === -1) {
+                res.sendStatus(400)
+            } else {
+                res.json(predictionResults);
+            }
+        } else {
+            res.status(400).send({
+                message:"Invalid file format"
+            });
+        }
+    } catch (error) {
+        res.sendStatus(400)
     }
+
 })
 
 export default router

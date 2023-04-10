@@ -1,38 +1,42 @@
 import { promises } from 'fs';
-import { io, loadLayersModel, node } from '@tensorflow/tfjs-node-gpu';
+import { io, loadLayersModel, node, argMax } from '@tensorflow/tfjs-node-gpu';
 const handler = io.fileSystem('saved_model_tfjs/model.json');
 import sharp from 'sharp'
 
+const model = await loadLayersModel(handler);
 
 async function getFileFromPath(fileName) {
+    const resizedImage = sharp(`uploads/${fileName}`)
+    .resize(128, 128)
+    .toBuffer();
+    return resizedImage;
+}
+
+async function parsePredictionResults(pred) {
+    let responseArray = [];
+    
+    for(let i = 0; i < pred.length; i++) {
+        let predictedValue = pred[i].arraySync();
+        predictedValue = argMax(predictedValue[0]).arraySync();
+        responseArray.push(predictedValue);
+    }
+
+    for(let i = 0; i < responseArray.length; i++) {
+        console.log(responseArray[i]);
+    }
+   return responseArray;
+}
+
+async function imagePrediction(imageName) {
+    const imageFile = await getFileFromPath(imageName);
     try {
-        let imageData = await promises.readFile(`uploads/${fileName}`);
-        return imageData;
-    } catch (error) {
-        console.error(`Error occured when reading the file ${error.message}`)
+        const tfImage = node.decodeImage(imageFile);
+        const pred = model.predict(tfImage.reshape([1, 128, 128, 3]));
+        return parsePredictionResults(pred);
+    } catch(err) {
+        console.log(err);
+        return -1;
     }
 }
-/*
-async function getMetaData(fileName) {
-    try {
-        const metaData = await sharp(`uploads/${fileName}`)
-          .resize(128, 128)
-         // .toFile(`uploads/${fileName}`);
-        console.log(metaData);
-       return metaData
-    } catch (error) {
-        console.error(`Error occured when reading the file ${error.message}`)
-    }
-}
-*/
-async function loadModel(imageName) {
-    const model = await loadLayersModel(handler);
 
-    let imageFile = await getFileFromPath(imageName);
-    let tfImage = node.decodeImage(imageFile);
-    let pred = model.predict(tfImage.reshape([1, 128, 128, 3]));
-    console.log(pred);
-
-}
-
-export default loadModel
+export default imagePrediction;
