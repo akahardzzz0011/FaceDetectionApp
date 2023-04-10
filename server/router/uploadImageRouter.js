@@ -5,24 +5,28 @@ import imagePrediction from '../imageDetection/imagePrediction.js';
 
 
 router.post('/', async (req, res) => {
+    console.log(req.files);
+    try {
+        const fileFormat = req.files.image.mimetype.split('/').pop();
+        const acceptedFormats = ['png', 'jpg', 'jpeg']
 
-    const fileFormat = req.files.image.mimetype.split('/').pop();
-    const acceptedFormats = ['png', 'jpg', 'jpeg']
-
-    if(acceptedFormats.includes(fileFormat)) {
-        await saveFileToPath(req.files.image);
-        const predictionResults = await imagePrediction(req.files.image.name);
-        //console.log(predictionResults);
-        if (predictionResults === -1) {
-            res.sendStatus(400)
+        if(acceptedFormats.includes(fileFormat.toLowerCase())) {
+            await saveFileToPath(req.files.image);
+            const predictionResults = await imagePrediction(req.files.image.name);
+            if (predictionResults === -1) {
+                res.sendStatus(400)
+            } else {
+                res.json(predictionResults);
+            }
         } else {
-            res.json(predictionResults);
+            res.status(400).send({
+                message:"Invalid file format"
+            });
         }
-    } else {
-        res.status(400).send({
-            message:"Invalid file format"
-        });
+    } catch (error) {
+        res.sendStatus(400)
     }
+
 })
 
 export default router

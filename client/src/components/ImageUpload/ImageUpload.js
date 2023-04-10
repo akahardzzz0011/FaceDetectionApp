@@ -1,14 +1,43 @@
 import React, { useState, } from 'react';
 import userService from '../../services/user.service';
+import Resizer from 'react-image-file-resizer';
 
 export default function ImageUpload() {
 
   const [imageFile, setImageFile] = useState();
   const [imageShown, setImageShown] = useState();
   
-  const inputImage = (e) => {
-    setImageFile(e.target.files[0]);
-    setImageShown(URL.createObjectURL(e.target.files[0]));
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        200,
+        200,
+        "png",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "file",
+        100,
+        100
+      );
+    });
+
+  const inputImage = async (e) => {
+    try {
+
+      const file = e.target.files[0];
+      const image = await resizeFile(file);
+      setImageFile(image);
+      setImageShown(URL.createObjectURL(image));
+      setImageFile(e.target.files[0]); 
+    
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   const processImageRequest = (e) => {
