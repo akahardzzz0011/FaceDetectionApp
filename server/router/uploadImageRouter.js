@@ -5,7 +5,6 @@ import imagePrediction from '../imageDetection/imagePrediction.js';
 
 
 router.post('/', async (req, res) => {
-    console.log(req.files);
     try {
         const fileFormat = req.files.image.mimetype.split('/').pop();
         const acceptedFormats = ['png', 'jpg', 'jpeg']

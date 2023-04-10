@@ -1,16 +1,15 @@
 import { promises } from 'fs';
 import { io, loadLayersModel, node, argMax } from '@tensorflow/tfjs-node-gpu';
 const handler = io.fileSystem('saved_model_tfjs/model.json');
+import sharp from 'sharp'
 
 const model = await loadLayersModel(handler);
 
 async function getFileFromPath(fileName) {
-    try {
-        const imageData = await promises.readFile(`uploads/${fileName}`);
-        return imageData;
-    } catch (error) {
-        console.error(`Error occured when reading the file in get file ${error.message}`)
-    }
+    const resizedImage = sharp(`uploads/${fileName}`)
+    .resize(128, 128)
+    .toBuffer();
+    return resizedImage;
 }
 
 async function parsePredictionResults(pred) {
@@ -31,7 +30,6 @@ async function parsePredictionResults(pred) {
 async function imagePrediction(imageName) {
     const imageFile = await getFileFromPath(imageName);
     try {
-
         const tfImage = node.decodeImage(imageFile);
         const pred = model.predict(tfImage.reshape([1, 128, 128, 3]));
         return parsePredictionResults(pred);
