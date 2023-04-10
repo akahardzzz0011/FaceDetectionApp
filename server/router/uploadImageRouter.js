@@ -3,17 +3,23 @@ const router = Router();
 import saveFileToPath from '../services/fileService.js';
 import imagePrediction from '../imageDetection/imagePrediction.js';
 
+
 router.post('/', async (req, res) => {
 
-    let fileFormat = req.files.image.mimetype.split('/').pop();
-    let acceptedFormats = ['png', 'jpg', 'jpeg']
+    const fileFormat = req.files.image.mimetype.split('/').pop();
+    const acceptedFormats = ['png', 'jpg', 'jpeg']
 
     if(acceptedFormats.includes(fileFormat)) {
-        saveFileToPath(req.files.image);
-        let predictionResults = await imagePrediction(req.files.image.name);
-        res.json(predictionResults);
+        await saveFileToPath(req.files.image);
+        const predictionResults = await imagePrediction(req.files.image.name);
+        //console.log(predictionResults);
+        if (predictionResults === -1) {
+            res.sendStatus(400)
+        } else {
+            res.json(predictionResults);
+        }
     } else {
-        res.send(400).send({
+        res.status(400).send({
             message:"Invalid file format"
         });
     }
