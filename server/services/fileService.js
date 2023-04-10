@@ -1,5 +1,4 @@
 import { join } from 'path';
-import sharp from 'sharp';
 
 const saveFileToPath = async (file) => {
     let staticPath = join('./', 'uploads');
