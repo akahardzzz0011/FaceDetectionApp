@@ -1,7 +1,7 @@
-import { promises } from 'fs';
 import { io, loadLayersModel, node, argMax } from '@tensorflow/tfjs-node-gpu';
 const handler = io.fileSystem('saved_model_tfjs/model.json');
 import sharp from 'sharp'
+import { AGE_MAP, GENDER_MAP, ETHNICITY_MAP } from './imageClasses.js';
 
 const model = await loadLayersModel(handler);
 
@@ -13,17 +13,17 @@ async function getFileFromPath(fileName) {
 }
 
 async function parsePredictionResults(pred) {
+    let classificationArray = [];
     let responseArray = [];
-    
-    for(let i = 0; i < pred.length; i++) {
+    for(let i = 1; i < pred.length; i++) {
         let predictedValue = pred[i].arraySync();
         predictedValue = argMax(predictedValue[0]).arraySync();
-        responseArray.push(predictedValue);
+        classificationArray.push(predictedValue);
     }
+    responseArray.push(AGE_MAP[classificationArray[0]]);
+    responseArray.push(GENDER_MAP[classificationArray[1]]);
+    responseArray.push(ETHNICITY_MAP[classificationArray[2]]);
 
-    for(let i = 0; i < responseArray.length; i++) {
-        console.log(responseArray[i]);
-    }
    return responseArray;
 }
 
