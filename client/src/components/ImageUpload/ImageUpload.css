@@ -1,0 +1,112 @@
+.main {
+    display: flex;
+    height: 500px;
+    width: 100%;
+    justify-content: center;
+}
+
+.button {
+    max-width: inherit;
+    display: flex;
+    max-width: 160px;
+    background-color: #0ec5ce;
+}
+
+.button {
+	display: flex;
+	background-color: #0ec5ce;
+	border: none;
+	border-radius: 8px;
+	color: #fff;
+	font-size: 15px;
+	max-width: 185px;
+	margin: 1px;
+	padding: 3px 3px;
+}
+
+@media screen and (max-width: 600px) {
+    .main-container {
+        align-self: center;
+        background-color: #00acff;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+        box-shadow: 5px 5px 5px #dcdcdc;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        min-height: 250px;
+        padding-top: 10px;
+        width: 100%;
+        gap: 25px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .main-container {
+        align-self: center;
+        background-color: #00acff;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+        box-shadow: 5px 5px 5px #dcdcdc;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        min-height: 250px;
+        padding-top: 10px;
+        width: 60%;
+    }
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 125px;
+}
+
+.result-main-container {
+	display: flex;
+	flex-direction: column;
+	width: 25%;
+	justify-content: space-evenly;
+    max-height: 240px;
+}
+
+.result-container {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.results {
+    display: flex;
+    align-self: center;
+}
+
+.upload {
+
+    position: relative;
+}
+
+.upload-text {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.results-text {
+    /*
+    display: flex;
+    align-self: center;
+    border-style: solid;
+    */
+}
+
+.secondary-container {
+    display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+    

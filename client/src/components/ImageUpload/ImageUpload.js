@@ -1,11 +1,13 @@
 import React, { useState, } from 'react';
 import userService from '../../services/user.service';
 import Resizer from 'react-image-file-resizer';
+import './ImageUpload.css';
 
 export default function ImageUpload() {
 
-  const [imageFile, setImageFile] = useState();
-  const [imageShown, setImageShown] = useState();
+  const [imageFile, setImageFile] = useState('');
+  const [imageShown, setImageShown] = useState('');
+  const [predictionResults, setPredictionResults] = useState([]);
   
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -44,17 +46,45 @@ export default function ImageUpload() {
     data.append('image', imageFile)
     
     userService.processImageRequest(data).then(results => {
-      console.log(results);
+      setPredictionResults(results.data);
+      console.log(predictionResults);
     });
   }
 
   return (
-    <div className='ImageUpload'>
-        <img alt='Uploaded' src={imageShown} />
-      <form onSubmit={processImageRequest}>
-        <input type='file' required onChange={inputImage} />
-        <input type="submit" value="Process Image" />
-      </form>
+    <div className='main'>
+      <div className='main-container'>
+        <div className='secondary-container'>
+          <div className='image-container'>
+            <img src={imageShown} />
+          </div>
+          <div>
+            <form onSubmit={processImageRequest}>
+              <div className='button'>
+                <input type='file' accept='.jpg, .png, .jpeg' required onChange={inputImage} />
+              </div>
+              <input className='button' type='submit' value='Process Image' />
+            </form>
+          </div>
+        </div>
+        <div className='result-main-container'>
+          <div className='result-container'>
+            <span>Results</span>
+          </div>
+          <div className='result-container'>
+            <span>Age:</span>
+            <span className='results'>{predictionResults[0]}</span>
+          </div>
+          <div className='result-container'>
+            <span>Gender:</span>
+            <span className='results'>{predictionResults[1]}</span>
+          </div>
+          <div className='result-container'>
+            <span>Ethnicity:</span>
+            <span className='results'>{predictionResults[2]}</span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
