@@ -95,18 +95,13 @@
     white-space: nowrap;
 }
 
-.results-text {
-    /*
-    display: flex;
-    align-self: center;
-    border-style: solid;
-    */
-}
-
 .secondary-container {
     display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 }
 
+span {
+    font-family: sans-serif;
+}
     

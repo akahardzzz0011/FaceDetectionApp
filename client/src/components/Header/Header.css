@@ -1,0 +1,11 @@
+.header-container {
+    border-bottom-style: solid;
+    border-width: 1px;
+    background-color: #00acff;
+    box-shadow: 5px 5px 5px #dcdcdc;
+}
+
+.header-text {
+    padding-left: 20%;
+    font-family: sans-serif;
+}

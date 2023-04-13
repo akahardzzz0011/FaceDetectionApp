@@ -47,7 +47,6 @@ export default function ImageUpload() {
     
     userService.processImageRequest(data).then(results => {
       setPredictionResults(results.data);
-      console.log(predictionResults);
     });
   }
 
@@ -56,7 +55,7 @@ export default function ImageUpload() {
       <div className='main-container'>
         <div className='secondary-container'>
           <div className='image-container'>
-            <img src={imageShown} />
+            <img alt='' src={imageShown} />
           </div>
           <div>
             <form onSubmit={processImageRequest}>
