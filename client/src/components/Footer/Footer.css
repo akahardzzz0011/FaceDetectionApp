@@ -1,0 +1,14 @@
+.footer-container {
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-width: 1px;
+    background-color: #00acff;
+    box-shadow: 5px -5px 5px #dcdcdc;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.footer-text {
+    font-family: sans-serif;
+}
