@@ -2,10 +2,16 @@
     border-bottom-style: solid;
     border-width: 1px;
     background-color: #00acff;
-    box-shadow: 5px 5px 5px #dcdcdc;
+    box-shadow: 5px 7px 5px #dcdcdc;
 }
 
 .header-text {
     padding-left: 20%;
     font-family: sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+    .header-text {
+        padding-left: 15%;
+    }
 }

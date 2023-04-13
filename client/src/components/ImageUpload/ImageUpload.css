@@ -1,15 +1,8 @@
 .main {
     display: flex;
-    height: 500px;
+    height: 700px;
     width: 100%;
     justify-content: center;
-}
-
-.button {
-    max-width: inherit;
-    display: flex;
-    max-width: 160px;
-    background-color: #0ec5ce;
 }
 
 .button {
@@ -21,7 +14,7 @@
 	font-size: 15px;
 	max-width: 185px;
 	margin: 1px;
-	padding: 3px 3px;
+	padding: 6px;
 }
 
 @media screen and (max-width: 600px) {
@@ -36,7 +29,8 @@
         flex-wrap: wrap;
         justify-content: center;
         min-height: 250px;
-        padding-top: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
         width: 100%;
         gap: 25px;
     }
@@ -53,8 +47,9 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        min-height: 250px;
+        min-height: 300px;
         padding-top: 10px;
+        padding-bottom: 20px;
         width: 60%;
     }
 }
