@@ -32,7 +32,8 @@ export default function ImageUpload() {
       const file = e.target.files[0];
       const image = await resizeFile(file);
       setImageShown(URL.createObjectURL(image));
-      setImageFile(e.target.files[0]); 
+      setImageFile(e.target.files[0]);
+      setPredictionResults([])
     } catch (error) {
       console.log(error);
     }
